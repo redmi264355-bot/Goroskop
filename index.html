@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Мир гороскопов — Cosmic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080716; --panel:rgba(21,17,48,.78); --line:rgba(174,139,255,.24);
+  --text:#f7f3ff; --muted:#b9afd9; --pink:#ff4fd8; --cyan:#62eaff;
+  --violet:#9a68ff; --gold:#ffd978;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;color:var(--text);font-family:Manrope,Arial,sans-serif;
+  background:linear-gradient(135deg,rgba(8,7,22,.94),rgba(25,10,55,.82)),
+    url("https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?auto=format&fit=crop&w=2000&q=85") center/cover fixed;
+  padding:24px 16px 50px; overflow-x:hidden;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 15%,#a04dff22,transparent 28%),radial-gradient(circle at 85% 30%,#ff4fd822,transparent 25%),radial-gradient(circle at 50% 90%,#42eaff18,transparent 30%)}
+.wrap{max-width:1100px;margin:auto;position:relative}
+header{text-align:center;padding:35px 16px 30px}
+.eyebrow{display:inline-block;padding:8px 14px;border:1px solid #c4a1ff55;border-radius:30px;color:#e1caff;background:#a26cff14;font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+h1{font-family:Orbitron,Manrope,sans-serif;font-size:clamp(30px,5vw,58px);line-height:1.15;letter-spacing:-1.5px;background:linear-gradient(90deg,#fff,#e0aaff 38%,#62eaff 75%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 35px #b65aff25}
+header p{color:var(--muted);margin:14px auto 0;max-width:650px;line-height:1.7}
+.names{margin-top:18px;color:#d8c8ff;font-size:13px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;margin-bottom:22px}
+.hero-card,.card{background:var(--panel);border:1px solid var(--line);border-radius:24px;box-shadow:0 18px 55px #0005;backdrop-filter:blur(16px)}
+.hero-card{padding:28px;position:relative;overflow:hidden;min-height:230px}
+.hero-card:after{content:"☾";position:absolute;font-size:180px;color:#d5b8ff12;right:10px;bottom:-55px}
+.hero-card h2{font-size:25px;margin-bottom:12px}
+.hero-card p{color:var(--muted);line-height:1.8;max-width:520px}
+.hero-art{border-radius:24px;min-height:230px;border:1px solid var(--line);background:linear-gradient(180deg,#100a1b22,#100a1b99),url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1000&q=85") center/cover;display:flex;align-items:flex-end;padding:22px;overflow:hidden}
+.hero-art{background-image:linear-gradient(180deg,#100a1b22,#100a1b99),url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1000&q=85")}
+.hero-art span{font-family:Orbitron,sans-serif;font-size:18px;letter-spacing:2px;text-shadow:0 3px 15px #000}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{padding:25px}
+.card h2{font-size:20px;margin-bottom:8px}
+.card .sub{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:18px}
+.number{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:10px;background:linear-gradient(135deg,var(--pink),var(--violet));font-weight:800;margin-right:9px;font-size:14px}
+input:not([type=radio]){width:100%;background:#0d0a22;border:1px solid #a78bfa55;color:white;border-radius:13px;padding:14px 15px;font-size:15px;outline:none;transition:.25s}
+input:not([type=radio]):focus{border-color:var(--cyan);box-shadow:0 0 0 3px #62eaff15}
+input::placeholder{color:#887da9}
+button{border:0;border-radius:13px;padding:13px 18px;margin-top:12px;color:#10071e;font-weight:800;font-size:14px;cursor:pointer;background:linear-gradient(100deg,var(--pink),#b18aff 52%,var(--cyan));transition:.25s;box-shadow:0 8px 25px #b85cff20}
+button:hover{transform:translateY(-2px);box-shadow:0 12px 30px #b85cff40}
+.result{margin-top:14px;padding:14px;border-radius:13px;background:#a26cff13;border:1px solid #a26cff35;color:#f4eaff;line-height:1.65;min-height:20px;overflow-wrap:anywhere}
+.result:empty{display:none}
+.radio-row{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.radio-row label{display:flex;align-items:center;gap:7px;background:#0d0a22;border:1px solid #a78bfa35;border-radius:12px;padding:10px 12px;color:#d8caff;font-size:13px;cursor:pointer}
+.radio-row input{accent-color:var(--pink)}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+td,th{text-align:left;padding:11px 9px;border-bottom:1px solid #a78bfa25}
+th{color:var(--cyan);font-weight:700}
+td{color:#e9e2ff}
+.table-wrap{overflow-x:auto}
+#timer{font-family:Orbitron,sans-serif;font-size:48px;color:var(--cyan);text-shadow:0 0 24px #62eaff50;text-align:center;margin:15px}
+.prediction{text-align:center;font-size:18px;font-weight:700}
+.good{color:#72ffd2}.bad{color:#ff8cb8}
+.buttons{display:flex;gap:10px;flex-wrap:wrap}
+.buttons button{flex:1}
+footer{text-align:center;color:#8f83b4;font-size:12px;padding:28px 10px 0}
+@media(max-width:760px){.hero,.grid{grid-template-columns:1fr}.hero-art{min-height:180px}.card{padding:20px}header{padding-top:22px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">✦ твоя космическая вселенная ✦</div>
+  <h1>МИР ГОРОСКОПОВ</h1>
+  <p>Загляни в звёздные подсказки, найди свой знак зодиака и узнай, какое предсказание приготовила для тебя Вселенная.</p>
+  <div class="names">Практическое задание №2 · Кашкарова Муслима · Полотова Арууке</div>
+</header>
+<section class="hero">
+  <div class="hero-card">
+    <h2>✨ Открой свою звёздную историю</h2>
+    <p>Немного магии, сияния и интерактива. Введи данные в карточках ниже — и пусть космос ответит! Гороскопы здесь для развлечения.</p>
+  </div>
+  <div class="hero-art"><span>THE COSMIC ORACLE</span></div>
+</section>
+<main class="grid">
+  <section class="card">
+    <h2><span class="number">01</span>Поиск HTML-тегов</h2>
+    <p class="sub">Введи название HTML-тега, например <b>div</b>, <b>img</b> или <b>h1</b>.</p>
+    <input id="tagInput" placeholder="Введи тег и нажми Enter">
+    <div id="desc" class="result"></div>
+  </section>
+  <section class="card">
+    <h2><span class="number">02</span>События по году</h2>
+    <p class="sub">Найди список событий, указав год из базы: 2000, 2001 или 2002.</p>
+    <input id="yearInput" inputmode="numeric" placeholder="Например, 2001 и нажми Enter">
+    <div class="table-wrap"><table id="table"></table></div>
+    <div id="yearMsg" class="result"></div>
+  </section>
+  <section class="card">
+    <h2><span class="number">03</span>Твой гороскоп</h2>
+    <p class="sub">Укажи дату рождения — система определит знак зодиака и покажет прогноз.</p>
+    <input id="birth" placeholder="ДД.ММ.ГГГГ" maxlength="10">
+    <div class="radio-row">
+      <label><input type="radio" name="d" value="today" checked> Сегодня</label>
+      <label><input type="radio" name="d" value="tomorrow"> Завтра</label>
+      <label><input type="radio" name="d" value="after"> Послезавтра</label>
+    </div>
+    <button id="horoBtn">Узнать гороскоп ✨</button>
+    <div id="res" class="result"></div>
+  </section>
+  <section class="card">
+    <h2><span class="number">04</span>Космическое предсказание</h2>
+    <p class="sub">Запусти сияющий генератор и останови его, чтобы получить случайное предсказание.</p>
+    <div id="timer">✦</div>
+    <div id="text" class="result prediction"></div>
+    <div class="buttons">
+      <button id="start">Запустить ✦</button>
+      <button id="stop">Получить прогноз</button>
+    </div>
+  </section>
+</main>
+<footer>✦ Сделано с вдохновением и звёздной энергией ✦</footer>
+</div>
+<script>
+// 1. Поиск HTML-тегов
+const tags = {
+  div:'Блочный контейнер', p:'Параграф текста', a:'Ссылка', img:'Картинка',
+  span:'Строчный контейнер', h1:'Заголовок 1 уровня', input:'Поле ввода',
+  button:'Кнопка', table:'Таблица', ul:'Маркированный список', li:'Элемент списка',
+  section:'Смысловой раздел', header:'Верхняя часть страницы'
+};
+const tagInput=document.getElementById('tagInput');
+const desc=document.getElementById('desc');
+tagInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const k=tagInput.value.trim().toLowerCase().replace(/[<>]/g,'');
+    desc.textContent=tags[k] ? `<${k}> — ${tags[k]}` : `Тег «${k}» не найден. Попробуй другой.`;
+  }
+});
+
+// 2. Поиск событий по году
+const events={
+  '2000':[{date:'20.01.2000',name:'Событие 1',desc:'Описание 1'},{date:'21.01.2000',name:'Событие 2',desc:'Описание 2'}],
+  '2001':[{date:'10.02.2001',name:'Событие 3',desc:'Описание 3'},{date:'11.02.2001',name:'Событие 4',desc:'Описание 4'},{date:'12.02.2001',name:'Событие 5',desc:'Описание 5'}],
+  '2002':[{date:'01.03.2002',name:'Событие 6',desc:'Описание 6'},{date:'02.04.2002',name:'Событие 7',desc:'Описание 7'},{date:'03.05.2002',name:'Событие 8',desc:'Описание 8'},{date:'04.06.2002',name:'Событие 9',desc:'Описание 9'}]
+};
+const yearInput=document.getElementById('yearInput'),table=document.getElementById('table'),yearMsg=document.getElementById('yearMsg');
+yearInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    table.innerHTML='';yearMsg.textContent='';
+    const year=yearInput.value.trim();
+    if(events[year]){
+      table.innerHTML='<tr><th>Дата</th><th>Событие</th><th>Описание</th></tr>';
+      events[year].forEach(ev=>{
+        const row=document.createElement('tr');
+        [ev.date,ev.name,ev.desc].forEach(value=>{const cell=document.createElement('td');cell.textContent=value;row.appendChild(cell)});
+        table.appendChild(row);
+      });
+    }else yearMsg.textContent='Событий за этот год нет. Введи 2000, 2001 или 2002.';
+  }
+});
+
+// 3. Гороскоп
+const horo={
+  овен:{today:'Сегодня ты лидер — смело действуй!',tomorrow:'Завтра удели время отдыху.',after:'Послезавтра тебя ждёт маленькая победа!'},
+  телец:{today:'День обещает приятные моменты.',tomorrow:'Будь внимательнее к деталям.',after:'Возможно, тебя порадует тёплая встреча.'},
+  близнецы:{today:'Сегодня открыты двери новым знакомствам.',tomorrow:'Удача может оказаться рядом.',after:'Хороший день для отдыха и идей.'},
+  рак:{today:'Сегодня удели внимание близким.',tomorrow:'Тебя может ждать приятный сюрприз.',after:'Доверься себе и своему настроению.'},
+  лев:{today:'Сегодня сияй и верь в свои силы!',tomorrow:'Ты можешь оказаться в центре внимания.',after:'День для смелых шагов.'},
+  дева:{today:'День новых идей и порядка.',tomorrow:'Не упускай интересную возможность.',after:'Пусть всё идёт своим чередом.'},
+  весы:{today:'Сегодня ищи гармонию и вдохновение.',tomorrow:'Возможна приятная встреча.',after:'Хорошие новости поднимут настроение.'},
+  скорпион:{today:'Будь смелее — ты справишься!',tomorrow:'Твои старания могут принести успех.',after:'День перемен и свежих мыслей.'},
+  стрелец:{today:'Время приключений и новых открытий!',tomorrow:'Пусть день будет удачным.',after:'Перед тобой новые возможности.'},
+  козерог:{today:'Труд и терпение помогут добиться цели.',tomorrow:'День достижений — гордись собой.',after:'Удача любит подготовленных.'},
+  водолей:{today:'День творчества и необычных идей.',tomorrow:'Возможны интересные знакомства.',after:'Добавь в день немного волшебства.'},
+  рыбы:{today:'Сегодня тебя вдохновит что-то прекрасное.',tomorrow:'Жди радостных мелочей.',after:'Приятный сюрприз может украсить день.'}
+};
+function getZodiac(d,m){
+  if((m===3&&d>=21)||(m===4&&d<=19))return'овен';
+  if((m===4&&d>=20)||(m===5&&d<=20))return'телец';
+  if((m===5&&d>=21)||(m===6&&d<=20))return'близнецы';
+  if((m===6&&d>=21)||(m===7&&d<=22))return'рак';
+  if((m===7&&d>=23)||(m===8&&d<=22))return'лев';
+  if((m===8&&d>=23)||(m===9&&d<=22))return'дева';
+  if((m===9&&d>=23)||(m===10&&d<=22))return'весы';
+  if((m===10&&d>=23)||(m===11&&d<=21))return'скорпион';
+  if((m===11&&d>=22)||(m===12&&d<=21))return'стрелец';
+  if((m===12&&d>=22)||(m===1&&d<=19))return'козерог';
+  if((m===1&&d>=20)||(m===2&&d<=18))return'водолей';
+  if((m===2&&d>=19)||(m===3&&d<=20))return'рыбы';
+}
+const birth=document.getElementById('birth'),res=document.getElementById('res');
+function showHoro(){
+  const parts=birth.value.trim().split('.').map(Number);
+  if(parts.length!==3||parts.some(n=>!n)){res.textContent='Введите дату в формате ДД.ММ.ГГГГ';return}
+  const [day,month,year]=parts,date=new Date(year,month-1,day);
+  if(date.getFullYear()!==year||date.getMonth()!==month-1||date.getDate()!==day){res.textContent='Неправильная дата! Проверь ввод.';return}
+  const sign=getZodiac(day,month),dayType=document.querySelector('[name="d"]:checked').value;
+  res.textContent=`♈ Твой знак: ${sign.toUpperCase()} — ${horo[sign][dayType]}`;
+}
+birth.addEventListener('keydown',e=>{if(e.key==='Enter')showHoro()});
+document.getElementById('horoBtn').addEventListener('click',showHoro);
+
+// 4. Предсказание
+const preds=[
+  {text:'У тебя будет замечательный день ✨',type:'good'},
+  {text:'Смелая идея принесёт радость 🌟',type:'good'},
+  {text:'Тебя ждёт приятная неожиданность 💫',type:'good'},
+  {text:'Сегодня отличный момент поверить в себя 💖',type:'good'},
+  {text:'Сделай паузу и береги свою энергию 🌙',type:'bad'}
+];
+const start=document.getElementById('start'),stop=document.getElementById('stop'),timer=document.getElementById('timer'),prediction=document.getElementById('text');
+let interval,num;
+start.onclick=()=>{
+  clearInterval(interval);num=undefined;prediction.textContent='';prediction.className='result prediction';
+  start.disabled=true;timer.textContent='✦';
+  interval=setInterval(()=>{num=Math.floor(Math.random()*preds.length);timer.textContent=String(num+1).padStart(2,'0')+' ✦'},90);
+};
+stop.onclick=()=>{
+  if(!interval)return;
+  clearInterval(interval);interval=null;start.disabled=false;
+  if(num===undefined){timer.textContent='✦';return}
+  const p=preds[num];prediction.textContent=p.text;prediction.className='result prediction '+p.type;
+  timer.textContent='✧';
+};
+</script>
+</body>
+</html>
